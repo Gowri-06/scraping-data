@@ -553,49 +553,86 @@ print("start_of_year",start_of_year)
 iso_format=start_of_year.isoformat()
 print("iso to use",type(iso_format),iso_format)
 # Define the GraphQL query
-# query = """
-#   {
-#   posts(order: VOTES, featured_at: "2022-02-01T00:00:00Z") {
-#     edges {
-#       node {
-#         name
-#         tagline
-#         featuredAt
-#       }
-#     }
-#   }
-# }
-# """
+query = """
+  {
+  posts(order: VOTES, featured_at: "2022-02-01T00:00:00Z") {
+    edges {
+      node {
+        name
+        tagline
+        featuredAt
+      }
+    }
+  }
+}
+"""
 # after: "MjA"
+# user
+# userId
+# slug
+# productLinks
 query = """
   query {
-    posts( postedAfter: "2023-01-01", postedBefore: "2023-01-31", order: RANKING,after: "ODA") {
+    posts(postedAfter: "2023-01-01", postedBefore: "2023-01-31", order: RANKING,after: "ODA") {
       edges {
         node {
           id
+          createdAt
+          slug
+          makers {
+          coverImage
+          id 
+          name
+          websiteUrl
+          username
+          isMaker
+          isViewer
+          profileImage
+          twitterUsername
+          url
+          }
+          productLinks{
+          type
+          url
+          }
+          userId
           name
           tagline
           url
           votesCount
-        
-        #   makerGroups {
-        #   nodes {
-        #     maker {
-        #       id
-        #       name
-        #       username
-        #     }
-        #   }
-        # }
-
+          website
+          commentsCount
+          description
+          user {
+          id
+          name 
+          username
+          websiteUrl
+          coverImage
+          createdAt 
+          headline
+          isMaker
+          isViewer
+          profileImage 
+          twitterUsername
+          url
+          }
+          featuredAt 
+          isCollected
+          isVoted
+          media {
+          videoUrl
+          url
+          }
+          reviewsCount
+          reviewsRating
+          thumbnail {
+          videoUrl
+          url
+          }
         }
-      }
-        #   makers {
-        #   nodes {
-        #     id
-        #   }
-        # }
-      pageInfo {
+       }
+     pageInfo {
         hasNextPage
         endCursor
       }
@@ -624,52 +661,53 @@ data = response.json()['data']['posts']['edges']
 size = len(data) 
 print("?????count",size)
 # list  = [["id", "name","tagline", "url", "votesCount"],]
-list1 = []
-list2 = []
-list3 = []
-list4 = []
-list5 = []
+# list1 = []
+# list2 = []
+# list3 = []
+# list4 = []
+# list5 = []
 
-for post in data:
-    print(post)
-    # a = {  
-    #      "id":post["id"],  
-    #      "name":post["name"],  
-    #      "tagline":post["tagline"],  
-    #      "url":post["url"],  
-    #      "votesCount":post["votesCount"]
-    #     }
+# for post in data:
+#     print(post)
+#     a = {  
+#          "id":post["id"],  
+#          "name":post["name"],  
+#          "tagline":post["tagline"],  
+#          "url":post["url"],  
+#          "votesCount":post["votesCount"]
+#         }
     
-    # b = [[a["id"],a["name"],a["tagline"],a["url"],a["votesCount"]]]
-    # list.append(b)
-    id_1 = post['node']["id"]
-    name_2=post['node']["name"] 
-    tagline_3=post['node']["tagline"]
-    url_4=post['node']["url"]
-    votesCount_5=post['node']["votesCount"]
-    list1.append(id_1)
-    list2.append(name_2)
-    list3.append(tagline_3)
-    list4.append(url_4)
-    list5.append(votesCount_5)
+#     b = [[a["id"],a["name"],a["tagline"],a["url"],a["votesCount"]]]
+#     list.append(b)
+#     id_1 = post['node']["id"]
+#     name_2=post['node']["name"] 
+#     tagline_3=post['node']["tagline"]
+#     url_4=post['node']["url"]
+#     votesCount_5=post['node']["votesCount"]
+#     list1.append(id_1)
+#     list2.append(name_2)
+#     list3.append(tagline_3)
+#     list4.append(url_4)
+#     list5.append(votesCount_5)
 
-df = pd.DataFrame({
-        "Id":list1,
-         "Name":list2,
-       "Tagline":list3,
-         "Url":list4,
-        "Votescount":list5,
+# df = pd.DataFrame({
+#         "Id":list1,
+#          "Name":list2,
+#        "Tagline":list3,
+#          "Url":list4,
+#         "Votescount":list5,
        
 
-                                       })
-df_old = pd.read_excel('ProducthuntProduct.xlsx')
-df_new = pd.concat([df_old,df], ignore_index=True)
+#                                        })
+# df_old = pd.read_excel('ProducthuntProduct.xlsx')
+# df_new = pd.concat([df_old,df], ignore_index=True)
 
-print(df)
-# df.to_excel("ProducthuntProduct.xlsx", index=False)
-df_new.to_excel('ProducthuntProduct.xlsx', index=False)
+# print(df)
+# # df.to_excel("ProducthuntProduct.xlsx", index=False)
+# df_new.to_excel('ProducthuntProduct.xlsx', index=False)
 
-print("file written now")
+# print("file written now")
+
 
 
 # Process the API response
@@ -681,5 +719,106 @@ print("file written now")
 #         print(f"{node['name']} ({node['tagline']}) - {node['url']} ({node['votesCount']} votes)")
 # else:
 #     print("Error retrieving data from API")
+
+
+
+
+
+import requests
+
+# Define the GraphQL query
+query = """
+  query {
+  
+      makerGroups(order:NEWEST) {
+        edges {
+          node {
+            id
+            name
+            description
+            url 
+            tagline
+            membersCount
+          }
+        }
+      }
+    
+  }
+"""
+
+
+
+# query = """ 
+# query GetMakerGroupAndPost($makerGroupId: ID!) {
+#   makerGroup(id: $makerGroupId) {
+#     name
+    
+#   }
+# }
+
+# """
+# query  = """
+# query GetCollectionDetailsWithMakerGroups {
+#   collection(id: "376802") {
+#     name
+#     url
+#     posts {
+#       edges {
+#         node {
+#           maker {
+#             makerGroups {
+#               edges {
+#                 node {
+#                   name
+#                   url
+#                 }
+#               }
+#             }
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
+# """
+
+
+
+
+
+
+
+
+
+
+# 376802
+# variables  = {
+#     "userIds":4339504
+# }
+# Define the API endpoint
+endpoint = "https://api.producthunt.com/v2/api/graphql"
+
+# Define the API headers
+headers = {
+    "Authorization": f'Bearer {token}',
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Host": "api.producthunt.com"
+
+}
+
+# Make the API request
+response = requests.post(endpoint, json={"query": query}, headers=headers)
+
+# Extract the data from the response
+data = response.json()
+print("***********",data)
+# # ["data"]["viewer"]["makerGroups"]["edges"]
+# # Print the results
+# for edge in data:
+#     node = edge["node"]
+#     # print(f"MakerGroup ID: {node['id']}")
+#     # print(f"MakerGroup Name: {node['name']}")
+#     print()
 
 
