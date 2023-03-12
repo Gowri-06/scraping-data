@@ -724,66 +724,63 @@ print("?????count",size)
 
 
 
-import requests
+# import requests
 
-# Define the GraphQL query
-query = """
-  query {
+# # Define the GraphQL query
+# query = """
+#   query {
   
-      makerGroups(order:NEWEST) {
-        edges {
-          node {
-            id
-            name
-            description
-            url 
-            tagline
-            membersCount
-          }
-        }
-      }
-    
-  }
-"""
-
-
-
-# query = """ 
-# query GetMakerGroupAndPost($makerGroupId: ID!) {
-#   makerGroup(id: $makerGroupId) {
-#     name
-    
-#   }
-# }
-
-# """
-# query  = """
-# query GetCollectionDetailsWithMakerGroups {
-#   collection(id: "376802") {
-#     name
-#     url
-#     posts {
-#       edges {
-#         node {
-#           maker {
-#             makerGroups {
-#               edges {
-#                 node {
-#                   name
-#                   url
-#                 }
-#               }
-#             }
+#       makerGroups(order:NEWEST) {
+#         edges {
+#           node {
+#             id
+#             name
+#             description
+#             url 
+#             tagline
+#             membersCount
 #           }
 #         }
 #       }
-#     }
+    
 #   }
-# }
 # """
 
 
 
+# # query = """ 
+# # query GetMakerGroupAndPost($makerGroupId: ID!) {
+# #   makerGroup(id: $makerGroupId) {
+# #     name
+    
+# #   }
+# # }
+
+# # """
+# # query  = """
+# # query GetCollectionDetailsWithMakerGroups {
+# #   collection(id: "376802") {
+# #     name
+# #     url
+# #     posts {
+# #       edges {
+# #         node {
+# #           maker {
+# #             makerGroups {
+# #               edges {
+# #                 node {
+# #                   name
+# #                   url
+# #                 }
+# #               }
+# #             }
+# #           }
+# #         }
+# #       }
+# #     }
+# #   }
+# # }
+# # """
 
 
 
@@ -791,34 +788,37 @@ query = """
 
 
 
-# 376802
-# variables  = {
-#     "userIds":4339504
+
+
+
+# # 376802
+# # variables  = {
+# #     "userIds":4339504
+# # }
+# # Define the API endpoint
+# endpoint = "https://api.producthunt.com/v2/api/graphql"
+
+# # Define the API headers
+# headers = {
+#     "Authorization": f'Bearer {token}',
+#     "Content-Type": "application/json",
+#     "Accept": "application/json",
+#     "Host": "api.producthunt.com"
+
 # }
-# Define the API endpoint
-endpoint = "https://api.producthunt.com/v2/api/graphql"
 
-# Define the API headers
-headers = {
-    "Authorization": f'Bearer {token}',
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Host": "api.producthunt.com"
+# # Make the API request
+# response = requests.post(endpoint, json={"query": query}, headers=headers)
 
-}
-
-# Make the API request
-response = requests.post(endpoint, json={"query": query}, headers=headers)
-
-# Extract the data from the response
-data = response.json()
-print("***********",data)
-# # ["data"]["viewer"]["makerGroups"]["edges"]
-# # Print the results
-# for edge in data:
-#     node = edge["node"]
-#     # print(f"MakerGroup ID: {node['id']}")
-#     # print(f"MakerGroup Name: {node['name']}")
-#     print()
+# # Extract the data from the response
+# data = response.json()
+# print("***********",data)
+# # # ["data"]["viewer"]["makerGroups"]["edges"]
+# # # Print the results
+# # for edge in data:
+# #     node = edge["node"]
+# #     # print(f"MakerGroup ID: {node['id']}")
+# #     # print(f"MakerGroup Name: {node['name']}")
+# #     print()
 
 
