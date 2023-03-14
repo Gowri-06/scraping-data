@@ -44,13 +44,14 @@ for i in range(0,100):
     combinee_url_one = ", ".join(var)
     result_list.append(combinee_url_one)
 # single_list = [ j for j in result_list[0]]
-print("result_list",len(result_list),result_list) 
-df = pd.read_excel('./txxxxt/ProducthuntProductCopy.xlsx')
+print("result_list",len(result_list),result_list)
 
-# print(df)
-df["Profile_Url"] = result_list
-# df.to_excel("ProducthuntProduct.xlsx", index=False)
-df.to_excel('./txxxxt/ProducthuntProductCopy.xlsx', index=False)
+# df = pd.read_excel('./txxxxt/ProducthuntProductCopy.xlsx')
+
+# # print(df)
+# df["Profile_Url"] = result_list
+# # df.to_excel("ProducthuntProduct.xlsx", index=False)
+# df.to_excel('./txxxxt/ProducthuntProductCopy.xlsx', index=False)
 # print("single_list",single_list)
     # remove_dup = list(dict.fromkeys(prof_url)) 
     # result_list2.append(prof_url)

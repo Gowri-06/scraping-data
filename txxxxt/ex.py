@@ -1,6 +1,7 @@
 import csv
 import json
 
+
 # Read the text file and convert it to a list of dictionaries
 with open('newbackup.txt', mode='r',encoding='utf-8') as file:
     csv_reader = csv.DictReader(file)
