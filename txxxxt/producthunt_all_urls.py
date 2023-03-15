@@ -163,12 +163,12 @@ def product_hunt():
 
 
                                            })
-    df.to_excel("Producthunt.xlsx", index=False)
+    df.to_excel("Producthuntsecond.xlsx", index=False)
     # print(df)
     # print("file written now")
-    # df_old = pd.read_excel('ProducthuntProduct.xlsx')
+    # df_old = pd.read_excel('Producthuntsecond.xlsx')
     # df_new = pd.concat([df_old,df], ignore_index=True)
-    # df_new.to_excel('ProducthuntProduct.xlsx', index=False)
+    # df_new.to_excel('Producthuntsecond.xlsx', index=False)
 
     option1 = Options()
     option1.headless = True
@@ -176,7 +176,7 @@ def product_hunt():
     service = Service("E:/selenium/chromedriver.exe")
     driver = webdriver.Chrome(service=service,chrome_options=option1,options=option1)
     # options=option1 service=service
-    df = pd.read_excel("./txxxxt/ProducthuntProductCopy.xlsx",sheet_name="Sheet1") 
+    df = pd.read_excel("./txxxxt/ProducthuntSecond.xlsx",sheet_name="Sheet1") 
     # print(df)
     url = df["Url"]
     id_list= df["Id"]
@@ -226,27 +226,26 @@ def product_hunt():
     # print("lists_into_one",lists_into_one)
     lists_into_two = [ item2 for sublist2 in only_id_list for item2 in sublist2] 
     # print("lists_into_two",lists_into_two)
-    df = pd.read_excel('./txxxxt/Producthunt_all_url.xlsx')
-    
-    # print(df)
-    df["Id Reference"] = lists_into_two 
-    # this is in a first excel sheet
-    df["Profile_Url"] = combined_url_list
-    # df.to_excel("ProducthuntProduct.xlsx", index=False)
     df = pd.DataFrame({
             "All_Urls":lists_into_one,
           
 
 
                                            })
-    df.to_excel('./txxxxt/Producthunt_all_url.xlsx', index=False)
+    df.to_excel('./txxxxt/ProducthuntSecondData.xlsx', index=False)
+    # print(df)
+    df = pd.read_excel('./txxxxt/ProducthuntSecondData.xlsx')
     df["Id Reference"] = lists_into_two 
+    # this is in a first excel sheet
+    df = pd.read_excel('./txxxxt/ProducthuntSecond.xlsx')
+    df["Profile_Url"] = combined_url_list
+    print("file written")
     # pass
     # profile_info_url_info_text
     #take json file 1
 
 
-    fd = pd.read_excel("./txxxxt/Producthunt_all_url.xlsx",sheet_name="Sheet1")
+    fd = pd.read_excel("./txxxxt/ProducthuntSecondData.xlsx",sheet_name="Sheet1")
     fd_url = fd["All_Urls"] 
     fd_url_list =[ pro_info_url_all for pro_info_url_all in fd_url ] 
     print(">>>>>>>>>",fd_url_list)
@@ -270,12 +269,13 @@ def product_hunt():
         print(both_header_about_info)
         fd_list.append(remove_slashes_str)
     print("$$$$$????fd_list",fd_list)  
-    df = pd.read_excel('./txxxxt/Producthunt_all_url.xlsx')
+    df = pd.read_excel('./txxxxt/ProducthuntSecondData.xlsx')
     # print(df)
     df["Profile Information"] = fd_list
-    df.to_excel('./txxxxt/Producthunt_all_url.xlsx', index=False)
+    # df.to_excel('./txxxxt/Producthunt_all_url.xlsx', index=False)
     print("file_written_now")
     # listen
+    # convert to json file 1
     # convert to json file 2
 # product_hunt()
 
@@ -334,7 +334,7 @@ def combine_json():
     with open('combined.json', 'w') as fout:
         json.dump(combined_data_file, fout)
 
-    # after combined json use it in a json studio to 
+    # after combined json use it in a json studio 
     ##################
     final_json = [{},{}]
 
