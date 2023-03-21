@@ -553,19 +553,19 @@ print("start_of_year",start_of_year)
 iso_format=start_of_year.isoformat()
 print("iso to use",type(iso_format),iso_format)
 # Define the GraphQL query
-query = """
-  {
-  posts(order: VOTES, featured_at: "2022-02-01T00:00:00Z") {
-    edges {
-      node {
-        name
-        tagline
-        featuredAt
-      }
-    }
-  }
-}
-"""
+# query = """
+#   {
+#   posts(order: VOTES, featured_at: "2022-02-01T00:00:00Z") {
+#     edges {
+#       node {
+#         name
+#         tagline
+#         featuredAt
+#       }
+#     }
+#   }
+# }
+# """
 # after: "MjA"
 # user
 # userId
