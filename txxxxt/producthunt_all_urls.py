@@ -294,7 +294,7 @@ def website_link():
 
         # # get href attribute
         # print(element.get_attribute('href'))
-website_link() 
+# website_link() 
 
 
 
@@ -312,7 +312,7 @@ def processing_data_web():
     # print(">>>>>>>>>",fd_url_list)
     fd_list = []
     list1  = []
-    for i in range(0,210):
+    for i in range(0,1):
       print(i)
         # print(url_list[i])
         # download chrome driver file
@@ -335,12 +335,12 @@ def processing_data_web():
       following = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div/header/div[1]/div/div/header/div/div[2]/div[2]/div[2]/a[2]")
       following_value = following.text
       print("following_value",following_value)
-      twitter_name =driver.find_element(By.XPATH,"//*[@id='__next']/div[3]/main/div[1]/div[1]") 
+      twitter_name =driver.find_element(By.XPATH,"//*[@id='__next']/div[3]/main/div[1]") 
       twitter_name_value = twitter_name.text
-      twitter_name_value.replace("Twitter","")
+      # twitter_name_value.replace("Twitter","")
+      print("twitter_name",twitter_name_value)
       link = twitter_name_value
       print("$$$",link)
-      print("twitter_name",twitter_name_value)
       dict  ={
 
       }
@@ -363,27 +363,40 @@ def processing_data_web():
           list_compre1 = [ i for i in filter_value if (i.startswith("https://twitter.com/") or i.startswith("https://www.linkedin.com/")  )]
           list_compre1.sort()
           print("list_compre1",list_compre1)
-          list2 = [ i for i in list_compre1 if i.startswith("https://twitter.com/")]
-          print("list2",list2)
-          list3 = [ j for j in list_compre1 if (j.startswith("https://www.linkedin.com/"))]
-          print("list3",list3)
+          str1 = ""
+          try:
+            list2 = [ f'{i}' for i in list_compre1 if i.startswith("https://twitter.com/")]
+            dict["Twitter Url"] = list2[0]
+            print("list2",list2)
+          except:
+            dict["Twitter Url"] = ""
+            print("An exception occurred twitter")
+          try:
+            list3 = [ f'{j}' for j in list_compre1 if (j.startswith("https://www.linkedin.com/"))]
+            dict["Linkedin Url"] = list3[0]
+            print("list3",list3)
+          except:
+            dict["Linkedin Url"] = ""
+            print("An exception occurred linked in")
+          list1.append(dict)
+
           # list4 = [ k for k in list_compre1 if (k.startswith("https://www.") or k.startswith("https://") or k.startswith("http://") or k.startswith("http://www."))]
           # print("list4",list4)
           # list_compre1.sort(reverse=True)
           # sorted_value = [list_compre1,list_compre1,list_compre1]
           # list1.append(list_compre1)
-          for j in list_compre1:
-              print("for loop")
-              if (len(list_compre1)) >= 2:
-                   dict["Twitter Url"] = list_compre1[0]
-                   dict["Linkedin Url"] = list_compre1[1]
-              elif j.startswith("https://twitter.com/"):
-                dict["Twitter Url"] = list_compre1[0]
+          # for j in list_compre1:
+          #     print("for loop")
+          #     if (len(list_compre1)) >= 2:
+          #          dict["Twitter Url"] = list_compre1[0]
+          #          dict["Linkedin Url"] = list_compre1[1]
+          #     elif j.startswith("https://twitter.com/"):
+          #       dict["Twitter Url"] = list_compre1[0]
            
-              elif j.startswith("https://www.linkedin.com/"):
-                dict["Linkedin Url"] = list_compre1[0]
-              list1.append(dict)
-              print("lennnnnncheck",len(list1))
+          #     elif j.startswith("https://www.linkedin.com/"):
+          #       dict["Linkedin Url"] = list_compre1[0]
+          #     list1.append(dict)
+          #     print("lennnnnncheck",len(list1))
 
 
 
@@ -429,6 +442,8 @@ def processing_data_web():
 
 
       else:
+          dict["Twitter Url"] = ""
+          dict["Linkedin Url"] = ""
           list1.append(dict)
           print("lennnnnnnn****",len(list1))
 
@@ -443,6 +458,7 @@ def processing_data_web():
           # dict["Twitter Url"] =  ""
           print("fail")
     print("dict",dict)
+    # list1.append(dict)
     print("listtttttttttt",list1)
     print(len(list1))
         # fd_maker_info_header = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div/header/div[1]/div/div")
@@ -456,15 +472,15 @@ def processing_data_web():
         # print(both_header_about_info)
         # fd_list.append(remove_slashes_str)
     # print("$$$$$????fd_list",fd_list)  
-    df = pd.read_excel('./txxxxt/Producthunt_all_url_backup.xlsx')
-    print(df)
-    df["Profile Information dict"] = list1
-    df.to_excel('./txxxxt/Producthunt_all_url_backup.xlsx', index=False)
-    print("file_written_now")
+    # df = pd.read_excel('./txxxxt/Producthunt_all_url_backup.xlsx')
+    # print(df)
+    # df["Profile Information dict"] = list1
+    # df.to_excel('./txxxxt/Producthunt_all_url_backup.xlsx', index=False)
+    # print("file_written_now")
     # listen
     # convert to json file 1
     # convert to json file 2
-# processing_data_web()
+processing_data_web()
 # product_hunt()
 
 def combine_json():

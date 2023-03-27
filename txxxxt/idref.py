@@ -1,5 +1,5 @@
 # # take the json file for profile information and id reference !important
-# import json 
+# import json
 # # Open and read the JSON file
 # with open('content3.json') as f:
 #     dict_list = json.load(f)
@@ -18,11 +18,11 @@
 #         lists_of_dicts.append([d])
 #     else:
 #         lists_of_dicts[ids_added[id_val]].append(d)
-        
+
 # print("lists_of_dicts",lists_of_dicts)
 # convert this value in to json
 ##################
-# Now combine both json to get final  json output 
+# Now combine both json to get final  json output
 ##################
 
 
@@ -59,7 +59,7 @@
 #         lists_of_dicts.append([d])
 #     else:
 #         lists_of_dicts[ids_added[id_val]].append(d)
-        
+
 # print(lists_of_dicts)
 
 # # list = []
@@ -72,8 +72,8 @@
 #     # print("add_information",data1)
 # with open('writedata.json', 'w') as json_file:
 #     json.dump(data1,json_file)
-        # list.append(i)
-        # pass
+# list.append(i)
+# pass
 # print("json_file1",list)
 # Open the second input file and load its contents
 # with open("writedata.json", "r") as f1:
@@ -2946,11 +2946,11 @@ final_json = [
 # Write the combined data to a new file
 
 
-fd = pd.read_excel("merged_file.xlsx",sheet_name="Sheet1")
-fd_url = fd["Website"] 
+fd = pd.read_excel("merged_file.xlsx", sheet_name="Sheet1")
+fd_url = fd["Website"]
 print(fd_url)
-fd_url_list =[ pro_info_url_all for pro_info_url_all in fd_url ] 
-print("fd_url_list",len(fd_url_list))
+fd_url_list = [pro_info_url_all for pro_info_url_all in fd_url]
+print("fd_url_list", len(fd_url_list))
 with open('producthuntdatafile.json', 'r') as f:
     dataone = json.load(f)
 
@@ -2961,225 +2961,22 @@ with open('producthuntdatafile.json', 'r') as f:
 # # load the JSON file into a list of dictionaries
 # with open('filename.json', 'r') as f:
 #     dict_list = json.load(f)
-for i in range(0,100):
+for i in range(0, 100):
     print()
 # add the new key to each dictionary in the list, with the list of strings as its value
-for dictionary in dataone:
-    dictionary['Website'] = fd_url_list[i]
+for i in range(0, len(dataone)):
+    dataone[i]['Website'] = fd_url_list[i]
 
 # write the updated list of dictionaries back to the JSON file
-with open('filenamehiiiii.json', 'w') as f:
+with open('Producthuntfinal.json', 'w') as f:
     json.dump(dataone, f)
 
-    # print("dataone",dataone) 
+    # print("dataone",dataone)
     # for i in range(0,100):
     #     # print(">>>>>>>>>>>>iiiii",i)
     #     for j in dataone:
     #         # print("???????jjjjj",j)
     #         j["Website"] = fd_url_list[i]
-    # print("dataone*******",dataone) 
+    # print("dataone*******",dataone)
     # with open('producthuntdatafilechecking.json', 'w') as fout:
-    #     json.dump(dataone, fout) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
-
-   
-
-
-  
- 
-  
-  
- 
-  
-   
-   
-  
-   
-   
- 
-  
-   
-  
- 
-   
-
- 
-   
-   
-  
-  
-  
- 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
+    #     json.dump(dataone, fout)
