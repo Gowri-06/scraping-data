@@ -186,7 +186,7 @@ def processing_all_data():
     service = Service("E:/selenium/chromedriver.exe")
     driver = webdriver.Chrome(service=service,chrome_options=option1,options=option1)
     # options=option1 service=service
-    df = pd.read_excel("./txxxxt/ProducthuntProductCopy.xlsx",sheet_name="Sheet1") 
+    df = pd.read_excel("./txxxxt/ProducthuntProductCopyCheck.xlsx",sheet_name="Sheet1") 
     # print(df)
     url = df["Url"]
     id_list= df["Id"]
@@ -195,8 +195,10 @@ def processing_all_data():
     # print("url_listtt",len(url_list),type(url_list))
     result_list = []
     combined_url_list = []
+    list_list = []
+    list2_list2 = []
     # id_value = []
-    for i in range(0,100):
+    for i in range(0,1):
         print(i)
         # print(url_list[i])
         # download chrome driver file
@@ -207,52 +209,150 @@ def processing_all_data():
         page_popup_close = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/a").click()
         time.sleep(5)
         maker_tab_click = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/div[2]/div/div[3]/a").click()
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(1000)
         maker_info = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div[3]/main/div[2]")
         a = maker_info.find_elements(By.TAG_NAME,"a")
         list_comphrension = [href.get_attribute("href") for href in a]
         # print("list_comphrension",list_comphrension)
+        # to remove any duplicates
         list1 =list(dict.fromkeys(list_comphrension))
         # result_list.append(list1)
         # print("list>>>>",list1)
         var = [ prof_url for prof_url in list1 if prof_url.startswith("https://www.producthunt.com/@") ]
-        combinee_url_one = ", ".join(var)
-        combined_url_list.append(combinee_url_one)
-        # print("var",var)
-        id_var = "id=" + str(id_list[i])
-        var2 = [ f'{prof_url}{id_var}' for prof_url in list1 if prof_url.startswith("https://www.producthunt.com/@")]
-        # print("var2",var2)
-        my_list = [k[-9:] for k in var2]
-        # print("my_list",my_list)
-        only_id_list.append(my_list)
-        # combinee_url_one = ", ".join(var)
-        result_list.append(var)
-        # id_value.append(var2)
-    print("only_id_list",only_id_list)
-    # print("id_value",id_value)
-    # single_list = [ j for j in result_list[0]]
-    # print("result_list",len(result_list),result_list) 
-    lists_into_one = [ item for sublist in result_list for item in sublist] 
-    # print("lists_into_one",lists_into_one)
-    lists_into_two = [ item2 for sublist2 in only_id_list for item2 in sublist2] 
-    # print("lists_into_two",lists_into_two)
-    df = pd.DataFrame({
-            "All_Urls":lists_into_one,
+
+        try:
+           for group_maker in var:
+               driver.get(f'{group_maker}')    
+               driver.maximize_window()
+               driver.implicitly_wait(1000)
+               name = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div/header/div[1]/div/div/header/div/div[2]/h1")
+               name_of_person = name.text
+               print("name_of_person",name_of_person)
+               desgination = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div/header/div[1]/div/div/header/div/div[2]/div[1]")
+               desgination_value = desgination.text
+               print("desgination_value=",desgination_value)
+               hashtag = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div/header/div[1]/div/div/header/div/div[2]/div[2]/div[1]")
+               hashtag_value = hashtag.text
+               print("hashtag_value",hashtag_value)
+               followers = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div/header/div[1]/div/div/header/div/div[2]/div[2]/div[2]/a[1]")
+               followers_value = followers.text
+               print("followers_value",followers_value)
+               following = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div/header/div[1]/div/div/header/div/div[2]/div[2]/div[2]/a[2]")
+               following_value = following.text
+               print("following_value",following_value)
+               page_text =driver.find_element(By.XPATH,"//*[@id='__next']/div[3]/main/div[1]") 
+               collect_h2_tags = page_text.find_elements(By.TAG_NAME,"h2") 
+               # print(collect_h2_tags,"collect_h2_tags")
+               h2_tag = [ h2.text for h2 in collect_h2_tags]
+               print(h2_tag,"h2_tag")
+               # twitter_name_value.replace("Twitter","")
+
+                # link = collect_h2_tags
+                # print("$$$",link)
+               dict  ={
+               
+               }
+               dict["Name"] = name_of_person 
+               dict["Desgination"] =  desgination_value 
+               dict["Hashtag_value"] = hashtag_value
+               dict["Followers_value"] =  followers_value
+               dict["Following_value"] =    following_value
+               dict["Twitter Url"] =  ""
+               dict["Linkedin Url"] = ""
+
+
+               if "LINKS" in h2_tag:
+                   print("pass")
+                   div_tag = driver.find_element(By.XPATH,"//*[@id='__next']/div[3]/main/div[1]/div[1]")
+                   anchor_tag = div_tag.find_elements(By.TAG_NAME,"a")
+                   coll_links = [href.get_attribute("href") for href in anchor_tag ]
+                   filter_value = coll_links
+                   print("filter_value",filter_value)
+                   list_compre1 = [ i for i in filter_value if (i.startswith("https://twitter.com/") or i.startswith("https://www.linkedin.com/")  )]
+                   list_compre1.sort()
+                   print("list_compre1",list_compre1)
+                   str1 = ""
+                   try:
+                     list2 = [ f'{i}' for i in list_compre1 if i.startswith("https://twitter.com/")]
+                     dict["Twitter Url"] = list2[0]
+                     print("list2",list2)
+                   except:
+                     dict["Twitter Url"] = ""
+                     print("An exception occurred twitter")
+                   try:
+                     list3 = [ f'{j}' for j in list_compre1 if (j.startswith("https://www.linkedin.com/"))]
+                     dict["Linkedin Url"] = list3[0]
+                     print("list3",list3)
+                   except:
+                     dict["Linkedin Url"] = ""
+                     print("An exception occurred linked in")
+                     list_list.append(dict)
+               else:
+                  dict["Twitter Url"] = ""
+                  dict["Linkedin Url"] = ""
+                  list_list.append(dict)
+                  print("lennnnnnnn****",len(list1))
+                  print("fail")
+        except:
+            dict["Name"] = ""
+            dict["Desgination"] = ""   
+            dict["Hashtag_value"] = "" 
+            dict["Followers_value"] = ""  
+            dict["Following_value"] = ""   
+            dict["Twitter Url"] =  ""
+            dict["Linkedin Url"] = ""
+            list_list.append(dict)
+            print("An exception occurred no makers history found")
+        list2_list2.append(list_list)
+        
+           
+           
+
+
+  
+           
+    #     combinee_url_one = ", ".join(var)
+    #     combined_url_list.append(combinee_url_one)
+    #     # print("var",var)
+    #     id_var = "id=" + str(id_list[i])
+    #     var2 = [ f'{prof_url}{id_var}' for prof_url in list1 if prof_url.startswith("https://www.producthunt.com/@")]
+    #     # print("var2",var2)
+    #     my_list = [k[-9:] for k in var2]
+    #     # print("my_list",my_list)
+    #     only_id_list.append(my_list)
+    #     # combinee_url_one = ", ".join(var)
+    #     result_list.append(var)
+    #     # id_value.append(var2)
+    # # print("only_id_list",only_id_list)
+    # # print("id_value",id_value)
+    # # single_list = [ j for j in result_list[0]]
+    # # print("result_list",len(result_list),result_list) 
+    # lists_into_one = [ item for sublist in result_list for item in sublist] 
+    # # print("lists_into_one",lists_into_one)
+    # lists_into_two = [ item2 for sublist2 in only_id_list for item2 in sublist2] 
+    # # print("lists_into_two",lists_into_two)
+    # df = pd.DataFrame({
+    #         "All_Urls":lists_into_one,
           
 
 
-                                           })
-    df.to_excel('./txxxxt/ProducthuntSecondData.xlsx', index=False)
-    # print(df)
-    df = pd.read_excel('./txxxxt/ProducthuntSecondData.xlsx')
-    df["Id Reference"] = lists_into_two 
+    #                                        })
+    # df.to_excel('./txxxxt/ProducthuntSecondData.xlsx', index=False)
+    # # print(df)
+    # df = pd.read_excel('./txxxxt/ProducthuntSecondData.xlsx')
+    # df["Id Reference"] = lists_into_two 
     # this is in a first excel sheet
-    df = pd.read_excel('./txxxxt/ProducthuntSecond.xlsx')
-    df["Profile_Url"] = combined_url_list
+    # df = pd.read_excel('./txxxxt/ProducthuntSecond.xlsx')
+    # df["Profile_Url"] = combined_url_list
+    print("list2_list2",list2_list2)
+    df = pd.read_excel('./txxxxt/ProducthuntProductCopyCheck.xlsx')
+    df["Makers Information"] =  list2_list2
     print("file written")
     # pass
     # profile_info_url_info_text
     #take json file 1
+processing_all_data()
+
 def website_link():
     option1 = Options()
     option1.headless = True
@@ -312,7 +412,7 @@ def processing_data_web():
     # print(">>>>>>>>>",fd_url_list)
     fd_list = []
     list1  = []
-    for i in range(0,1):
+    for i in range(0,210):
       print(i)
         # print(url_list[i])
         # download chrome driver file
@@ -335,12 +435,15 @@ def processing_data_web():
       following = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div/header/div[1]/div/div/header/div/div[2]/div[2]/div[2]/a[2]")
       following_value = following.text
       print("following_value",following_value)
-      twitter_name =driver.find_element(By.XPATH,"//*[@id='__next']/div[3]/main/div[1]") 
-      twitter_name_value = twitter_name.text
+      page_text =driver.find_element(By.XPATH,"//*[@id='__next']/div[3]/main/div[1]") 
+      collect_h2_tags = page_text.find_elements(By.TAG_NAME,"h2") 
+      # print(collect_h2_tags,"collect_h2_tags")
+      h2_tag = [ h2.text for h2 in collect_h2_tags]
+      print(h2_tag,"h2_tag")
       # twitter_name_value.replace("Twitter","")
-      print("twitter_name",twitter_name_value)
-      link = twitter_name_value
-      print("$$$",link)
+
+      # link = collect_h2_tags
+      # print("$$$",link)
       dict  ={
 
       }
@@ -353,7 +456,7 @@ def processing_data_web():
       dict["Linkedin Url"] = ""
       
 
-      if "LINKS" in link:
+      if "LINKS" in h2_tag:
           print("pass")
           div_tag = driver.find_element(By.XPATH,"//*[@id='__next']/div[3]/main/div[1]/div[1]")
           anchor_tag = div_tag.find_elements(By.TAG_NAME,"a")
@@ -480,7 +583,7 @@ def processing_data_web():
     # listen
     # convert to json file 1
     # convert to json file 2
-processing_data_web()
+# processing_data_web()
 # product_hunt()
 
 def combine_json():
