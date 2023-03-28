@@ -190,7 +190,7 @@ def processing_all_data():
     # print(df)
     url = df["Url"]
     id_list= df["Id"]
-    only_id_list = []
+    only_id_list = [id_no for id_no in id_list]
     url_list =  [ product for product in url ]
     # print("url_listtt",len(url_list),type(url_list))
     result_list = []
@@ -198,7 +198,7 @@ def processing_all_data():
     list_list = []
     list2_list2 = []
     # id_value = []
-    for i in range(0,1):
+    for i in range(0,2):
         print(i)
         # print(url_list[i])
         # download chrome driver file
@@ -208,8 +208,8 @@ def processing_all_data():
         driver.implicitly_wait(1000)
         page_popup_close = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/a").click()
         time.sleep(5)
-        maker_tab_click = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/div[2]/div/div[3]/a").click()
-        driver.implicitly_wait(1000)
+        maker_tab_click = driver.find_element(By.XPATH, "//*[@id='__next']/div[2]/div[2]/div/div[4]/a").click()
+        driver.implicitly_wait(100)
         maker_info = driver.find_element(By.XPATH,"//*[@id='__next']/div[2]/div[3]/main/div[2]")
         a = maker_info.find_elements(By.TAG_NAME,"a")
         list_comphrension = [href.get_attribute("href") for href in a]
@@ -219,7 +219,8 @@ def processing_all_data():
         # result_list.append(list1)
         # print("list>>>>",list1)
         var = [ prof_url for prof_url in list1 if prof_url.startswith("https://www.producthunt.com/@") ]
-
+        # driver.quit()
+        new_list = []
         try:
            for group_maker in var:
                driver.get(f'{group_maker}')    
@@ -249,16 +250,17 @@ def processing_all_data():
 
                 # link = collect_h2_tags
                 # print("$$$",link)
-               dict  ={
+               dict1  ={
                
                }
-               dict["Name"] = name_of_person 
-               dict["Desgination"] =  desgination_value 
-               dict["Hashtag_value"] = hashtag_value
-               dict["Followers_value"] =  followers_value
-               dict["Following_value"] =    following_value
-               dict["Twitter Url"] =  ""
-               dict["Linkedin Url"] = ""
+               dict1["Name"] = name_of_person 
+               dict1["Desgination"] =  desgination_value 
+               dict1["Hashtag_value"] = hashtag_value
+               dict1["Followers_value"] =  followers_value
+               dict1["Following_value"] =    following_value
+               dict1["Twitter Url"] =  ""
+               dict1["Linkedin Url"] = ""
+              #  dict1["Id"] = only_id_list[i] it works
 
 
                if "LINKS" in h2_tag:
@@ -274,37 +276,43 @@ def processing_all_data():
                    str1 = ""
                    try:
                      list2 = [ f'{i}' for i in list_compre1 if i.startswith("https://twitter.com/")]
-                     dict["Twitter Url"] = list2[0]
+                     dict1["Twitter Url"] = list2[0]
                      print("list2",list2)
                    except:
-                     dict["Twitter Url"] = ""
+                     dict1["Twitter Url"] = ""
                      print("An exception occurred twitter")
                    try:
                      list3 = [ f'{j}' for j in list_compre1 if (j.startswith("https://www.linkedin.com/"))]
-                     dict["Linkedin Url"] = list3[0]
+                     dict1["Linkedin Url"] = list3[0]
                      print("list3",list3)
                    except:
-                     dict["Linkedin Url"] = ""
+                     dict1["Linkedin Url"] = ""
                      print("An exception occurred linked in")
-                     list_list.append(dict)
+                     new_list.append(dict1)
+                    #  list2_list2.append(list_list)
+
+
                else:
-                  dict["Twitter Url"] = ""
-                  dict["Linkedin Url"] = ""
-                  list_list.append(dict)
+                  dict1["Twitter Url"] = ""
+                  dict1["Linkedin Url"] = ""
+                  new_list.append(dict1)
                   print("lennnnnnnn****",len(list1))
                   print("fail")
         except:
-            dict["Name"] = ""
-            dict["Desgination"] = ""   
-            dict["Hashtag_value"] = "" 
-            dict["Followers_value"] = ""  
-            dict["Following_value"] = ""   
-            dict["Twitter Url"] =  ""
-            dict["Linkedin Url"] = ""
-            list_list.append(dict)
+            dict1["Name"] = ""
+            dict1["Desgination"] = ""   
+            dict1["Hashtag_value"] = "" 
+            dict1["Followers_value"] = ""  
+            dict1["Following_value"] = ""   
+            dict1["Twitter Url"] =  ""
+            dict1["Linkedin Url"] = ""
+            # dict1["Id"] = only_id_list[i]
+
+            new_list.append(dict1)
             print("An exception occurred no makers history found")
-        list2_list2.append(list_list)
-        
+            # list2_list2.append(list_list)
+        list2_list2.append(new_list)
+
            
            
 
@@ -344,10 +352,38 @@ def processing_all_data():
     # this is in a first excel sheet
     # df = pd.read_excel('./txxxxt/ProducthuntSecond.xlsx')
     # df["Profile_Url"] = combined_url_list
+    # print("list_list",list_list)
+   
+
+# read the existing Excel file
+    df_existing = pd.read_excel('./txxxxt/ProducthuntProductCopyCheck.xlsx')
+    df_existing["New Column"] = list2_list2
+    df_existing.to_excel('./txxxxt/ProducthuntProductCopyCheck.xlsx', index=False)
+  
+# create a new DataFrame with the data you want to add
+    # data = [[{'key1': 'value1', 'key2': 'value2'}],
+    #     [{'key5': 'value5', 'key6': 'value6'}],
+    #     [{'key7': 'value7', 'key8': 'value8'}]]
+
+    # df_new = pd.DataFrame(list2_list2, columns=['Makers Information'])
+    # print("df_new",df_new)
+# add the new column to the existing DataFrame
+    # df_existing['Makers Info'] = df_new['Makers Information']
+    # df_temp = pd.DataFrame(columns=['New Column'], index=df_existing.index)
+
+# assign the new values to the new column in the temporary DataFrame
+    # df_temp['New Column'] = df_new['Makers Information']
+
+# concatenate the existing DataFrame and the temporary DataFrame
+    # df_result = pd.concat([df_existing, df_temp], axis=1)
+# write the updated DataFrame back to the same or a different Excel file
+    # df_result.to_excel('./txxxxt/ProducthuntProductCopyCheck.xlsx', index=False)
+
     print("list2_list2",list2_list2)
-    df = pd.read_excel('./txxxxt/ProducthuntProductCopyCheck.xlsx')
-    df["Makers Information"] =  list2_list2
+    # df = pd.read_excel('./txxxxt/ProducthuntProductCopyCheck.xlsx')
+    # df["Makers Information"] =  list2_list2
     print("file written")
+
     # pass
     # profile_info_url_info_text
     #take json file 1
