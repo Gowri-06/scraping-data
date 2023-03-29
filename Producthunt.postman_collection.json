@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "0357fbcd-32d0-426b-baa5-aff451a4534b",
+		"name": "Producthunt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19690951"
+	},
+	"item": [
+		{
+			"name": "v2 token",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"host": true,
+					"content-length": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "useBrowser",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "scope",
+							"value": "public private",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "1wjln8CWwlkXMPD2pCn_9FMUiImQWa2ufBpq9yEOSpE",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "9GOONMWT7QSiq7CrukHHocxk9bSLrWZANzuKHhJ8gC8",
+							"type": "string"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://dataextract.netlify.app/auth/callback",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "https://api.producthunt.com/v2/oauth/token",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "https://api.producthunt.com/v2/oauth/authorize",
+							"type": "string"
+						},
+						{
+							"key": "tokenName",
+							"value": "Usersdetails",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.api+json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer -eeXWPxxFOuFLBrElX_5JLtaZtobWbosPcc",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Host",
+						"value": "api.producthunt.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.producthunt.com/v2/oauth/authorize?client_id=9GOONMWT7QSiq7CrukHHocxk9bSLrWZANzuKHhJ8gC8&redirect_uri=https://dataextract.netlify.app/auth/callback&response_type=code&scope=public+private",
+					"protocol": "https",
+					"host": [
+						"api",
+						"producthunt",
+						"com"
+					],
+					"path": [
+						"v2",
+						"oauth",
+						"authorize"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "9GOONMWT7QSiq7CrukHHocxk9bSLrWZANzuKHhJ8gC8"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://dataextract.netlify.app/auth/callback"
+						},
+						{
+							"key": "response_type",
+							"value": "code"
+						},
+						{
+							"key": "scope",
+							"value": "public+private"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://api.producthunt.com/v1/posts/all?sort_by=votes_count&order=desc&search[featured]=true&per_page=4\n\n",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true,
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer KLd8uT-eeXWPxxFOZyuFLBrElX_5JLtaZtobWbosPcc",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "api.producthunt.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.producthunt.com/v1/posts/all?sort_by=votes_count&order=desc&search[featured]=true&per_page=4\n\n",
+					"protocol": "https",
+					"host": [
+						"api",
+						"producthunt",
+						"com"
+					],
+					"path": [
+						"v1",
+						"posts",
+						"all"
+					],
+					"query": [
+						{
+							"key": "sort_by",
+							"value": "votes_count"
+						},
+						{
+							"key": "order",
+							"value": "desc"
+						},
+						{
+							"key": "search[featured]",
+							"value": "true"
+						},
+						{
+							"key": "per_page",
+							"value": "4\n\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"content-length": true,
+					"user-agent": true,
+					"accept": true,
+					"host": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": "api.producthunt.com",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer 0W9LnNaJUnuMZ9a6c4YgLPHVfreEDQFEh1IbltSAQ-s ",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query getProduct($productId: ID!) {\r\n  product(id: $productId) {\r\n    name\r\n  }\r\n}\r\n",
+						"variables": "\r\n"
+					}
+				},
+				"url": {
+					"raw": "https://api.producthunt.com/v2/api/graphql",
+					"protocol": "https",
+					"host": [
+						"api",
+						"producthunt",
+						"com"
+					],
+					"path": [
+						"v2",
+						"api",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"content-length": true,
+					"user-agent": true,
+					"accept": true,
+					"host": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": "api.producthunt.com",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer 0W9LnNaJUnuMZ9a6c4YgLPHVfreEDQFEh1IbltSAQ-s ",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\r\n    query: query { products { edges { node { name } } } }\r\n}\r\n",
+						"variables": "\r\n"
+					}
+				},
+				"url": {
+					"raw": "https://api.producthunt.com/v2/api/graphql",
+					"protocol": "https",
+					"host": [
+						"api",
+						"producthunt",
+						"com"
+					],
+					"path": [
+						"v2",
+						"api",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
